@@ -53,6 +53,7 @@ export function categorieError(errorCategorie) {
 export const CATALOG_SEARCH_VALUE= 'CATALOG_SEARCH_VALUE'
 export const CATALOG_SEARCH_VALUE_DELETE= 'CATALOG_SEARCH_VALUE_DELETE'
 export const CATALOG_SEARCH_VALUE_ISSEARCHING= 'CATALOG_SEARCH_VALUE_ISSEARCHING'
+export const CATALOG_SEARCH_HEADER= 'CATALOG_SEARCH_HEADER'
 
 export function catalogSearchValue(value) {
     return { type: CATALOG_SEARCH_VALUE, payload: { value } }
@@ -62,4 +63,7 @@ export function catalogSearchValueDelete() {
 }
 export function catalogSearchValueIsSearching() {
     return { type: CATALOG_SEARCH_VALUE_ISSEARCHING }
+}
+export function catalogSearchHeader(value) {
+    return { type: CATALOG_SEARCH_HEADER, payload: {value} }
 }

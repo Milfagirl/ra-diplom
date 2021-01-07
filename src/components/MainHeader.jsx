@@ -1,8 +1,13 @@
 import React from 'react'
 import logo from '../img/header-logo.png'
 import {NavLink} from 'react-router-dom'
-
+import { useSelector, useDispatch } from 'react-redux';
+import {catalogSearchHeader} from '../redux/actionCreator'
 export default function MainHeader() {
+    const dispatch = useDispatch();
+    const handleSearchHeader = () => {
+        dispatch(catalogSearchHeader(true))
+    }
     return (
         <header className="container">
             <div className="row">
@@ -29,7 +34,7 @@ export default function MainHeader() {
                             </ul>
                             <div>
                                 <div className="header-controls-pics">
-                                    <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
+                                    <div data-id="search-expander" className="header-controls-pic header-controls-search" onClick = {handleSearchHeader}></div>
                                     {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                                 <div className="header-controls-pic header-controls-cart">
                                         <div className="header-controls-cart-full">1</div>

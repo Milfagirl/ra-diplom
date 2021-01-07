@@ -5,6 +5,7 @@ import axios from 'axios'
 import { NavLink, Link } from 'react-router-dom'
 import Container from './Container'
 import Preloader from './Preloader'
+import { useHistory } from "react-router-dom";
 import {
     hitRequest,
     hitSuccess,
@@ -15,25 +16,38 @@ import {
     catalogFiltered,
     categorieRequest,
     categorieSuccess,
-    categorieError
+    categorieError,
+    catalogSearchHeader,
+    catalogSearchValue,
+    catalogSearchValueIsSearching
+
 } from '../redux/actionCreator'
 
 export default function Main() {
     const { itemsHit, loadingHit, errorHit, classNameHit } = useSelector(state => state.hitListAdd);
-    const { itemsCatalog, loadingCatalog, errorCatalog, classNameCatalog, filteredCatalog } = useSelector(state => state.catalogListAdd);
+    const { itemsCatalog, loadingCatalog, errorCatalog, classNameCatalog, filteredCatalog, searchHeader } = useSelector(state => state.catalogListAdd);
     const { itemsCategorie, loadingCategorie, errorCategorie, classNameCategorie } = useSelector(state => state.categorieListAdd);
-
+    const { searchCatalogValue , isSearching } = useSelector(state => state.catalogSearch);
     const dispatch = useDispatch();
     const urlHit = '/api/top-sales'
     const urlCatalog = '/api/items'
     const urlCategorie = '/api/categories'
-
+    let history = useHistory();
     useEffect(() => {
         getItems(dispatch, urlHit, hitRequest, hitSuccess, hitError)
 
     }, [dispatch])
 
+    const handleChangeSearch = (e) => {
+        dispatch(catalogSearchValue(e.target.value))
+    }
 
+    const handleSearchCatalog = (e) => {
+        e.preventDefault()
+        history.push("/catalog");
+        dispatch(catalogSearchValueIsSearching())
+        dispatch(catalogSearchHeader(false))
+    }
 
     return (
         <main className="container">
@@ -46,7 +60,7 @@ export default function Main() {
 
                     <section className="top-sales">
                         <h2 className="text-center">Хиты продаж!</h2>
-                       
+
                         {loadingHit ? <Preloader /> :
                             <div className={classNameHit}>
                                 {itemsHit.map((item) => {
@@ -71,11 +85,16 @@ export default function Main() {
 
                     <section className="catalog">
                         <h2 className="text-center">Каталог</h2>
+                        {searchHeader &&
+                            <form className="catalog-search-form form-inline" type='Submit' onSubmit={handleSearchCatalog} >
+                                <input className="form-control" placeholder="Поиск" onChange={handleChangeSearch} value={searchCatalogValue} />
+                            </form>
+                        }
                         < Container />
                     </section>
                 </div>
             </div>
-        </main>
+        </main >
     )
 }
 
