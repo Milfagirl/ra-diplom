@@ -67,3 +67,30 @@ export function catalogSearchValueIsSearching() {
 export function catalogSearchHeader(value) {
     return { type: CATALOG_SEARCH_HEADER, payload: {value} }
 }
+//---------------------------------------------------------
+export const ITEM_IN_ORDER= 'ITEM_IN_ORDER'
+export const ITEM_IN_ORDER_REQUEST = 'ITEM_IN_ORDER_REQUEST'
+export const ITEM_IN_ORDER_ERROR = 'ITEM_IN_ORDER_ERROR'
+export const ITEM_IN_ORDER_SUCCESS = 'ITEM_IN_ORDER_SUCCESS'
+export const ITEM_IN_ORDER_SELECTED = 'ITEM_IN_ORDER_SELECTED'
+export const ITEM_IN_ORDER_COUNT = 'ITEM_IN_ORDER_COUNT'
+
+export function itemInOrderRequest() {
+    return { type: ITEM_IN_ORDER_REQUEST}
+}
+export function itemInOrderSuccess(itemFullInfo) {
+    return { type: ITEM_IN_ORDER_SUCCESS, payload: { itemFullInfo } }
+}
+export function itemInOrderError(errorItem) {
+    return { type: ITEM_IN_ORDER_ERROR , payload: { errorItem } }
+}
+export const itemInOrder = (item) => {
+    return {type: ITEM_IN_ORDER, payload: {item}}
+}
+export const itemInOrderSelected = (value) => {
+    return {type: ITEM_IN_ORDER_SELECTED, payload: {value}}
+}
+export const itemInOrderCount = (valueCount) => {
+    return {type: ITEM_IN_ORDER_COUNT, payload: {valueCount}}
+}
+

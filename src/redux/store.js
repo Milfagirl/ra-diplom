@@ -3,12 +3,14 @@ import catalogListAdd from './reducers/catalogListAdd'
 import hitListAdd from './reducers/hitListAdd'
 import categorieListAdd from './reducers/categorieListAdd'
 import catalogSearch from './reducers/catalogSearch'
+import itemOrder from './reducers/itemOrder'
 
 const reducer = combineReducers({
     catalogListAdd,
     hitListAdd,
     categorieListAdd,
-    catalogSearch    
+    catalogSearch,
+    itemOrder    
 })
 
 const store = createStore(

@@ -7,6 +7,7 @@ import About from './components/About'
 import Catalog from './components/Catalog'
 import Contacts from './components/Contacts'
 import Main from './components/Main'
+import Item from './components/Item'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/about" component={About} />
           <Route exact path="/contacts" component={Contacts} />
+          <Route exact path="/items/:id" component={Item} />
         </Switch>
         <MainFooter />
       </div>

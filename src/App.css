@@ -663,3 +663,8 @@ section {
 #navbarMain {
   justify-content: space-between;
 }
+.catalog-item-size button{
+  border: none;
+  outline: none;
+  background-color: inherit;
+}

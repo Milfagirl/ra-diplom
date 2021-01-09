@@ -14,7 +14,8 @@ import {
     catalogFiltered,
     categorieRequest,
     categorieSuccess,
-    categorieError
+    categorieError,
+    itemInOrder
 } from '../redux/actionCreator'
 import { getItems } from './Main'
 
@@ -31,6 +32,7 @@ export default function Container() {
     const { itemsCatalog, loadingCatalog, errorCatalog, classNameCatalog, filteredCatalog } = useSelector(state => state.catalogListAdd);
     const { itemsCategorie, loadingCategorie, errorCategorie, classNameCategorie } = useSelector(state => state.categorieListAdd);
     const { searchCatalogValue , isSearching } = useSelector(state => state.catalogSearch);
+    const {itemOrder} = useSelector(state => state.itemOrder)
     const handleCategorie = (e, id) => {
         e.preventDefault();
         count.current = 0
@@ -67,6 +69,9 @@ export default function Container() {
         
     }
 
+    const handleOrder = (item) => {
+       dispatch(itemInOrder(item))
+    }
     useEffect(() => {
         if (!isSearching) {
             getItems(dispatch, urlCatalog, catalogRequest, catalogSuccess, catalogError)
@@ -104,7 +109,7 @@ export default function Container() {
                                     <div className="card-body">
                                         <p className="card-text">{item.title}</p>
                                         <p className="card-text">{item.price}</p>
-                                        <NavLink to={`/items/${itemsCatalog.indexOf(item)}`} className="btn btn-outline-primary">Заказать</NavLink>
+                                        <NavLink to={`/items/${item.id}`} className="btn btn-outline-primary" onClick= {() => handleOrder(item)}>Заказать</NavLink>
                                     </div>
                                 </div>
                             </div>
