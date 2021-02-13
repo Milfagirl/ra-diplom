@@ -2,7 +2,7 @@ import {
     CATALOG_SEARCH_VALUE,
     CATALOG_SEARCH_VALUE_DELETE,
     CATALOG_SEARCH_VALUE_ISSEARCHING
-} from '../actionCreator'
+} from './types'
 
 const initialState = {
     searchCatalogValue: '',
@@ -16,7 +16,8 @@ export default function catalogSearch(state = initialState, action) {
         case CATALOG_SEARCH_VALUE_DELETE:
             return { initialState }
         case CATALOG_SEARCH_VALUE_ISSEARCHING:
-            return { ...state, isSearching: true }
+            const {valueIsSearching} = action.payload
+            return { ...state, isSearching: valueIsSearching }
         default:
             return state;
     }

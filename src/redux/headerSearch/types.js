@@ -1,0 +1,2 @@
+export const HEADER_PUT = 'HEADER_PUT'
+export const HEADER_SEARCH = 'HEADER_SEARCH'

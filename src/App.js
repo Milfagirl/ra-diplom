@@ -8,6 +8,7 @@ import Catalog from './components/Catalog'
 import Contacts from './components/Contacts'
 import Main from './components/Main'
 import Item from './components/Item'
+import Cart from './components/Cart'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/about" component={About} />
           <Route exact path="/contacts" component={Contacts} />
           <Route exact path="/items/:id" component={Item} />
+          <Route exact path="/cart" component={Cart} />
         </Switch>
         <MainFooter />
       </div>

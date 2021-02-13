@@ -1,16 +1,21 @@
   import { createStore, combineReducers } from 'redux'
-import catalogListAdd from './reducers/catalogListAdd'
-import hitListAdd from './reducers/hitListAdd'
-import categorieListAdd from './reducers/categorieListAdd'
-import catalogSearch from './reducers/catalogSearch'
-import itemOrder from './reducers/itemOrder'
+import catalogList from './catalogList/reducer'
+import hitList from './hitList/reducer'
+import categorieList from './categorieList/reducer'
+import catalogSearch from './catalogSearch/reducer'
+import itemOrder from './itemOrder/reducer'
+import headerSearch from './headerSearch/reducer'
+import cartList from './cartList/reducer'
+
 
 const reducer = combineReducers({
-    catalogListAdd,
-    hitListAdd,
-    categorieListAdd,
+    catalogList,
+    hitList,
+    categorieList,
     catalogSearch,
-    itemOrder    
+    itemOrder,
+    headerSearch, 
+    cartList  
 })
 
 const store = createStore(

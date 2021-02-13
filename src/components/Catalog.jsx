@@ -2,35 +2,45 @@ import Container from './Container'
 import banner from '../img/banner.jpg'
 import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from './Main'
-import {
-    catalogSearchValue,
-    catalogRequest,
-    catalogSuccess,
-    catalogError,
-    catalogSearchValueDelete,
-    catalogSearchValueIsSearching
-} from '../redux/actionCreator'
-export default function Catalog() {
 
-    const { searchCatalogValue , isSearching } = useSelector(state => state.catalogSearch);
+import catalogListActions from '../redux/catalogList/actions'
+import catalogSearchActions from '../redux/catalogSearch/actions'
+import categorieListActions from '../redux/categorieList/actions'
+import hitListActions from '../redux/hitList/actions'
+import itemOrderActions from '../redux/itemOrder/actions'
+
+
+
+import {url, getItems} from '../redux/utils/api'
+
+export default function Catalog() {
     
+    const hitListState = useSelector(state => state.hitList);
+    const catalogListState = useSelector(state => state.catalogList);
+    const categorieListState = useSelector(state => state.categorieList);
+    const catalogSearchState  = useSelector(state => state.catalogSearch);
+    const itemOrderState = useSelector(state => state.itemOrder)
+
     const dispatch = useDispatch();
     const handleChangeSearch = (e) => {
-        dispatch(catalogSearchValue(e.target.value))
+        dispatch(catalogSearchActions.catalogSearchValue(e.target.value))
+        if (!e.target.value) {
+            dispatch(catalogSearchActions.catalogSearchValueIsSearching(false))
+        }
+        
     }
 
     const handleSearchCatalog = (e) => {
         e.preventDefault()
-        console.log(searchCatalogValue)
-        if (searchCatalogValue === '') {
-            dispatch(catalogSearchValueDelete())
-        } else {
-            dispatch(catalogSearchValueIsSearching())
-            const url =  `/api/items?q=${searchCatalogValue}`
-            getItems(dispatch, url, catalogRequest, catalogSuccess, catalogError)
-        }
+        dispatch(catalogSearchActions.catalogSearchValueIsSearching(true))
+        getItems(dispatch, `${url.urlCatalog}?q=${catalogSearchState.searchCatalogValue}`, catalogListActions.catalogRequest, catalogListActions.catalogSuccess, catalogListActions.catalogError)
+          
+        
     }
+    // useEffect(() => {
+    //     dispatch(catalogSearchActions.catalogSearchValueIsSearching(false))
+    //     dispatch(catalogSearchActions.catalogSearchValue(''))
+    // })
     return (
         <>
             <main className="container">
@@ -43,7 +53,7 @@ export default function Catalog() {
                         <section className="catalog">
                             <h2 className="text-center">Каталог</h2>
                             <form className="catalog-search-form form-inline" type='Submit' onSubmit={handleSearchCatalog}>
-                                <input className="form-control" placeholder="Поиск" onChange={handleChangeSearch} value={searchCatalogValue} />
+                                <input className="form-control" placeholder="Поиск" onChange={handleChangeSearch} value={ catalogSearchState.searchCatalogValue} />
                             </form>
                             < Container />
                         </section>

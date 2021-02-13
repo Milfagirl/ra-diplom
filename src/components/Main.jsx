@@ -6,55 +6,48 @@ import { NavLink, Link } from 'react-router-dom'
 import Container from './Container'
 import Preloader from './Preloader'
 import { useHistory } from "react-router-dom";
-import {
-    hitRequest,
-    hitSuccess,
-    hitError,
-    catalogRequest,
-    catalogSuccess,
-    catalogError,
-    catalogFiltered,
-    categorieRequest,
-    categorieSuccess,
-    categorieError,
-    catalogSearchHeader,
-    catalogSearchValue,
-    catalogSearchValueIsSearching,
-    itemInOrder
 
-} from '../redux/actionCreator'
+import catalogListActions from '../redux/catalogList/actions'
+import catalogSearchActions from '../redux/catalogSearch/actions'
+import categorieListActions from '../redux/categorieList/actions'
+import hitListActions from '../redux/hitList/actions'
+import itemOrderActions from '../redux/itemOrder/actions'
+
+import {url, getItems} from '../redux/utils/api'
+
+
 
 export default function Main() {
-    const { itemsHit, loadingHit, errorHit, classNameHit } = useSelector(state => state.hitListAdd);
-    const { itemsCatalog, loadingCatalog, errorCatalog, classNameCatalog, filteredCatalog, searchHeader } = useSelector(state => state.catalogListAdd);
-    const { itemsCategorie, loadingCategorie, errorCategorie, classNameCategorie } = useSelector(state => state.categorieListAdd);
-    const { searchCatalogValue , isSearching } = useSelector(state => state.catalogSearch);
-    const {itemOrder} = useSelector(state => state.itemOrder)
-    const dispatch = useDispatch();
-    const urlHit = '/api/top-sales'
-    const urlCatalog = '/api/items'
-    const urlCategorie = '/api/categories'
-    let history = useHistory();
-    useEffect(() => {
-        getItems(dispatch, urlHit, hitRequest, hitSuccess, hitError)
 
+    const hitListState = useSelector(state => state.hitList);
+    const catalogListState = useSelector(state => state.catalogList);
+    const categorieListState = useSelector(state => state.categorieList);
+    const catalogSearchState  = useSelector(state => state.catalogSearch);
+    const itemOrderState = useSelector(state => state.itemOrder)
+  
+    const dispatch = useDispatch();
+    
+    let history = useHistory();
+
+    useEffect(() => {
+        getItems(dispatch, url.urlHit, hitListActions.hitRequest, hitListActions.hitSuccess, hitListActions.hitError)
     }, [dispatch])
 
     const handleChangeSearch = (e) => {
-        dispatch(catalogSearchValue(e.target.value))
+        dispatch(catalogListActions.catalogSearchValue(e.target.value))
     }
 
     const handleSearchCatalog = (e) => {
         e.preventDefault()
-        history.push("/catalog");
-        dispatch(catalogSearchValueIsSearching())
-        dispatch(catalogSearchHeader(false))
+        history.push('/catalog');
+        dispatch(catalogSearchActions.catalogSearchValueIsSearching())
+        dispatch(catalogSearchActions.catalogSearchHeader(false))
     }
 
     const handleOrder = (item) => {
-        dispatch(itemInOrder(item))
+        dispatch(itemOrderActions.itemOrder(item))
      }
-
+    
     return (
         <main className="container">
             <div className="row">
@@ -67,9 +60,8 @@ export default function Main() {
                     <section className="top-sales">
                         <h2 className="text-center">Хиты продаж!</h2>
 
-                        {loadingHit ? <Preloader /> :
-                            <div className={classNameHit}>
-                                {itemsHit.map((item) => {
+                        {hitListState.loadingHit ? <Preloader /> : <div className='row'>
+                                {hitListState.itemsHit.map((item) => {
                                     return (
                                         <div className="col-4" key={item.id}>
                                             <div className="card">
@@ -78,7 +70,7 @@ export default function Main() {
                                                 <div className="card-body">
                                                     <p className="card-text">{item.title}</p>
                                                     <p className="card-text">{item.price}</p>
-                                                    <NavLink to={`/items/${itemsHit.indexOf(item)}`} className="btn btn-outline-primary" onClick= {() => handleOrder(item)}>Заказать</NavLink>
+                                                    <NavLink to={`/items/${hitListState.itemsHit.indexOf(item)}`} className="btn btn-outline-primary" onClick= {() => handleOrder(item)}>Заказать</NavLink>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,9 +83,9 @@ export default function Main() {
 
                     <section className="catalog">
                         <h2 className="text-center">Каталог</h2>
-                        {searchHeader &&
+                        {catalogSearchState.searchHeader &&
                             <form className="catalog-search-form form-inline" type='Submit' onSubmit={handleSearchCatalog} >
-                                <input className="form-control" placeholder="Поиск" onChange={handleChangeSearch} value={searchCatalogValue} />
+                                <input className="form-control" placeholder="Поиск" onChange={handleChangeSearch} value= {catalogSearchState.searchCatalogValue} />
                             </form>
                         }
                         < Container />
@@ -105,15 +97,3 @@ export default function Main() {
 }
 
 
-export const getItems = (dispatch, url, request, success, geterror) => {
-    dispatch(request())
-    axios.get(`${process.env.REACT_APP_API_URL}${url}`)
-        .then(function (response) {
-            dispatch(success(response.data))
-        })
-        .catch(function (error) {
-            dispatch(geterror(error))
-            console.log(error);
-        })
-
-}
