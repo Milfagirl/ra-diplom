@@ -23,13 +23,18 @@ export default function Item() {
     const cartListState = useSelector(state => state.cartList)
 
     const dispatch = useDispatch();
+    let history = useHistory()
 
     const [activate, setActivate] = useState(false)
     const [countChange, setCountChange] = useState(1)   //количество заказанного товара
     const [checkSize, setCheckSize] = useState('') // выбранный размер
-    const newUrl = `${url.urlCatalog}/${itemOrderState.item.id}`
+   
     useEffect(() => {
+        !itemOrderState.item.id && history.push('/')
+        const newUrl = `${url.urlCatalog}/${itemOrderState.item.id}`
         getItems(dispatch, newUrl, itemOrderActions.itemOrderRequest, itemOrderActions.itemOrderSuccess, itemOrderActions.itemOrderError)
+        console.log(itemOrderState.item )
+        
     }, [itemOrderState.item])
 
     const handlesize = (value) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 // import axios from 'axios'
 import { NavLink, Link } from 'react-router-dom'
@@ -22,12 +22,14 @@ export default function Container() {
 
     const count = useRef(0)
     const btndisabled = useRef(false)
+    const [categorieActive, setCategorieActive] = useState(null)
     const dispatch = useDispatch();
+
 
     const handleCategorie = (e, id) => {
         e.preventDefault();
         count.current = 0
-        
+        setCategorieActive(Number(id))
         if (Number(id) === 0) {
             const newurl = catalogSearchState.isSearching?  `${url.urlSearchItems}q=${catalogSearchState.searchCatalogValue}` : url.urlCatalog
             getItems(dispatch, newurl, catalogListActions.catalogRequest, catalogListActions.catalogSuccess, catalogListActions.catalogError)
@@ -64,6 +66,7 @@ export default function Container() {
 
     const handleOrder = (item) => {
        dispatch(itemOrderActions.itemOrder(item))
+      
     }
     useEffect(() => {
         if (!catalogSearchState.isSearching) {
@@ -91,7 +94,7 @@ export default function Container() {
                     {categorieListState.itemsCategorie.map((item) => {
                         return (
                             <li key={item.id} className="nav-item" onClick={(e) => handleCategorie(e, item.id)}>
-                                <Link to='#' className="nav-link active" >{item.title}</Link>
+                                <Link to='#' className={`nav-link ${categorieActive ===  Number(item.id) && 'active'}`} >{item.title}</Link>
                             </li>
                         )
                     })}
@@ -103,7 +106,9 @@ export default function Container() {
                         return (
                             <div className="col-4" key={item.id}>
                                 <div className="card catalog-item-card">
-                                    <img src={item.images[1] } className="card-img-top img-fluid" alt="Босоножки 'MYER'" />
+                                    <div className = 'div-img'>
+                                    <img src={item.images[0]? item.images[0] : item.images[1] } className="card-img-top" alt={item.title} />
+                                    </div>
                                     <div className="card-body">
                                         <p className="card-text">{item.title}</p>
                                         <p className="card-text">{item.price}</p>

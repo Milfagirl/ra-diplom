@@ -6,7 +6,6 @@ import { url,postItems }from '../redux/utils/api'
 export default function Cart() {
     const itemOrderState = useSelector(state => state.itemOrder)
     const cartListState = useSelector(state => state.cartList)
-    // const [itemsRender, setItemsRender] = useState([])
     const [fullPriceRender, setFullPriceRender] = useState(0)
 
     const [phoneText, setPhoneText] = useState('')

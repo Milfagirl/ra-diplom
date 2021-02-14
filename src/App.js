@@ -9,6 +9,7 @@ import Contacts from './components/Contacts'
 import Main from './components/Main'
 import Item from './components/Item'
 import Cart from './components/Cart'
+import NotFound from './components/NotFound'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/contacts" component={Contacts} />
           <Route exact path="/items/:id" component={Item} />
           <Route exact path="/cart" component={Cart} />
+          <Route component={NotFound} />
         </Switch>
         <MainFooter />
       </div>

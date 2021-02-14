@@ -4,14 +4,8 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom';
 
-// import catalogListActions from '../redux/catalogList/actions'
 import catalogSearchActions from '../redux/catalogSearch/actions'
-// import categorieListActions from '../redux/categorieList/actions'
-// import hitListActions from '../redux/hitList/actions'
-// import itemOrderActions from '../redux/itemOrder/actions'
 import headerSearchActions from '../redux/headerSearch/actions'
-
-// import { url, getItems } from '../redux/utils/api'
 import cartListActions from '../redux/cartList/actions';
 
 
@@ -20,10 +14,6 @@ export default function MainHeader() {
     let history = useHistory();
 
     const hitListState = useSelector(state => state.hitList);
-    // const catalogListState = useSelector(state => state.catalogList);
-    // const categorieListState = useSelector(state => state.categorieList);
-    // const catalogSearchState = useSelector(state => state.catalogSearch);
-    // const itemOrderState = useSelector(state => state.itemOrder)
     const headerSearchState = useSelector(state => state.headerSearch)
     const cartListState = useSelector(state => state.cartList)
     const dispatch = useDispatch();
@@ -71,7 +61,7 @@ export default function MainHeader() {
             dispatch(cartListActions.cartItems(items))
             dispatch(cartListActions.cartCountChange(countLocalStorage))
         }
-       
+
     }, [dispatch])
 
     return (
@@ -103,9 +93,11 @@ export default function MainHeader() {
                                     <div data-id="search-expander" className="header-controls-pic header-controls-search" onClick={handleSearchHeader}></div>
                                     {/* <!-- Do programmatic navigation on click to /cart.html --> */}
                                     <NavLink to='/cart' className="header-controls-pic header-controls-cart" >
-                                        
+                                        {cartListState.countCart > 0 &&
                                             <div className="header-controls-cart-full">{cartListState.countCart}</div>
-                                        
+                                        }
+
+
                                         <div className="header-controls-cart-menu"></div>
                                     </NavLink>
                                 </div>

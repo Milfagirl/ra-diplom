@@ -1,13 +1,11 @@
 import Container from './Container'
 import banner from '../img/banner.jpg'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
 import catalogListActions from '../redux/catalogList/actions'
 import catalogSearchActions from '../redux/catalogSearch/actions'
-import categorieListActions from '../redux/categorieList/actions'
-import hitListActions from '../redux/hitList/actions'
-import itemOrderActions from '../redux/itemOrder/actions'
+
 
 
 
