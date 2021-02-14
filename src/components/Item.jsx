@@ -95,11 +95,7 @@ export default function Item() {
            
 
         }
-        // console.log(cartListState.items)
-        // let count = 0
-        // cartListState.items.map(o => (count = count + o.count))
-        // dispatch(cartListActions.cartCountChange(count))
-
+   
         setCountChange(1)
         setActivate(false)
         setCheckSize('')

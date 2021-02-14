@@ -1,25 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-// import axios from 'axios'
 import { NavLink, Link } from 'react-router-dom'
 import Preloader from './Preloader'
 
 import catalogListActions from '../redux/catalogList/actions'
-// import catalogSearchActions from '../redux/catalogSearch/actions'
 import categorieListActions from '../redux/categorieList/actions'
-// import hitListActions from '../redux/hitList/actions'
 import itemOrderActions from '../redux/itemOrder/actions'
 
 import {url, getItems} from '../redux/utils/api'
 
 
 export default function Container() {
-    // const hitListState = useSelector(state => state.hitList);
     const catalogListState = useSelector(state => state.catalogList);
     const categorieListState = useSelector(state => state.categorieList);
     const catalogSearchState  = useSelector(state => state.catalogSearch);
-    // const itemOrderState = useSelector(state => state.itemOrder)
-
     const count = useRef(0)
     const btndisabled = useRef(false)
     const [categorieActive, setCategorieActive] = useState(null)

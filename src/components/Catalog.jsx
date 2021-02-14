@@ -13,12 +13,7 @@ import {url, getItems} from '../redux/utils/api'
 
 export default function Catalog() {
     
-    const hitListState = useSelector(state => state.hitList);
-    const catalogListState = useSelector(state => state.catalogList);
-    const categorieListState = useSelector(state => state.categorieList);
     const catalogSearchState  = useSelector(state => state.catalogSearch);
-    const itemOrderState = useSelector(state => state.itemOrder)
-
     const dispatch = useDispatch();
     const handleChangeSearch = (e) => {
         dispatch(catalogSearchActions.catalogSearchValue(e.target.value))
@@ -35,10 +30,7 @@ export default function Catalog() {
           
         
     }
-    // useEffect(() => {
-    //     dispatch(catalogSearchActions.catalogSearchValueIsSearching(false))
-    //     dispatch(catalogSearchActions.catalogSearchValue(''))
-    // })
+   
     return (
         <>
             <main className="container">
